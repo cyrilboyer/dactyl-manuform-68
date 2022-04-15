@@ -810,11 +810,11 @@
          (difference plate-right (translate [0 0 10] (union case-walls
                                    screw-insert-outers)))))
 
-;; (spit "things/right-plate.scad"
-;;       (write-scad plate-right))
+(spit "things/right-plate.scad"
+      (write-scad plate-right))
 
-;; (spit "things/left-plate.scad"
-;;       (write-scad (mirror [-1 0 0] plate-right)))
+(spit "things/left-plate.scad"
+      (write-scad (mirror [-1 0 0] plate-right)))
 
 (spit "things/test.scad"
       (write-scad
