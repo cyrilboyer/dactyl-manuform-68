@@ -32,12 +32,12 @@
 
 (def thumb-offsets [6 -3 -6])
 
-(def keyboard-z-offset 12)               ; controls overall height; original=9 with centercol=3; use 16 for centercol=2
+(def keyboard-z-offset 15)               ; controls overall height; original=9 with centercol=3; use 16 for centercol=2
 
 (def extra-width 2.5)                   ; extra space between the base of keys; original= 2
 (def extra-height 1.0)                  ; original= 0.5
 
-(def wall-z-offset -15)                 ; length of the first downward-sloping part of the wall (negative)
+(def wall-z-offset -10)                 ; length of the first downward-sloping part of the wall (negative)
 (def wall-xy-offset 8)                  ; offset in the x and/or y direction for the first downward-sloping part of the wall (negative)
 (def wall-thickness 3)                  ; wall thickness parameter; originally 5
 
@@ -375,7 +375,7 @@
        (rotate (deg2rad -23) [0 1 0])
        (rotate (deg2rad  10) [0 0 1])
        (translate thumborigin)
-       (translate [-32 -18 13])
+       (translate [-32 -18 20])
        ))
 (defn thumb-tl-place [shape]
   (->> shape
@@ -389,11 +389,11 @@
        (translate [-55 -17 12])))
 (defn thumb-mr-place [shape]
   (->> shape
-       (rotate (deg2rad  -6) [1 0 0])
+       (rotate (deg2rad  16) [1 0 0])
        (rotate (deg2rad -34) [0 1 0])
        (rotate (deg2rad  48) [0 0 1])
        (translate thumborigin)
-       (translate [-52 -42 -1])
+       (translate [-48 -42 2.5])
        ))
 (defn thumb-ml-place [shape]
   (->> shape
@@ -404,7 +404,7 @@
        (translate [-74 -27 2])))
 (defn thumb-br-place [shape]
   (->> shape
-       (rotate (deg2rad -16) [1 0 0])
+       (rotate (deg2rad 10) [1 0 0])
        (rotate (deg2rad -33) [0 1 0])
        (rotate (deg2rad  54) [0 0 1])
        (translate thumborigin)
@@ -594,10 +594,7 @@
    (key-wall-brace 1 lastrow 0.5 -1 web-post-br 2 lastrow 1 -1 web-post-bl)
    (key-wall-brace 2 lastrow   1 -1 web-post-bl 2 lastrow 0.5 -1 web-post-br)
    (key-wall-brace 2 lastrow 0.5 -1 web-post-br 3 lastrow 1 -1 web-post-bl)
-  ;;  (key-wall-brace 3 lastrow   0 -1 web-post-bl 3 lastrow 0.5 -1 web-post-br)
-
    (key-wall-brace 4 lastrow 0.5 -1 web-post-br 5 cornerrow 0 -1 web-post-br)
-
    (key-wall-brace 4 lastrow 0.5 -1 web-post-br 4 lastrow 1 -1 web-post-bl)
    (key-wall-brace 4 lastrow 1 -1 web-post-bl 3 4 1 -1 web-post-bl)
    
@@ -639,12 +636,14 @@
      (left-key-place cornerrow -1 (translate (wall-locate2 -1 0) web-post))
      (left-key-place cornerrow -1 (translate (wall-locate3 -1 0) web-post))
      (thumb-tl-place thumb-post-tl))
+
    (hull
      (left-key-place cornerrow -1 web-post)
      (left-key-place cornerrow -1 (translate (wall-locate1 -1 0) web-post))
      (key-place 0 cornerrow web-post-bl)
-     (key-place 0 cornerrow (translate (wall-locate1 -1 0) web-post-bl))
+     (key-place 0 cornerrow (translate (wall-locate1 0 2) web-post-bl))
      (thumb-tl-place thumb-post-tl))
+     
    (hull
      (thumb-ml-place web-post-tr)
      (thumb-ml-place (translate (wall-locate1 -0.3 1) web-post-tr))
@@ -692,11 +691,13 @@
     )))
 
 (defn screw-insert-all-shapes [bottom-radius top-radius height]
-  (union (screw-insert 0 0         bottom-radius top-radius height)
-         (screw-insert 0 (- lastrow 0.6)   bottom-radius top-radius height)
-         (screw-insert 2 (+ lastrow 0.35)  bottom-radius top-radius height)
-         (screw-insert 3 0         bottom-radius top-radius height)
-         (screw-insert lastcol 1   bottom-radius top-radius height)
+  (union (screw-insert -0.9 -0.5         bottom-radius top-radius height)
+         (screw-insert 0 (- lastrow 0.43)   bottom-radius top-radius height)
+         (screw-insert 0.5 4.3  bottom-radius top-radius height)
+         (screw-insert 2 -0.4         bottom-radius top-radius height)
+         (screw-insert 3.6 4.1   bottom-radius top-radius height)
+         (screw-insert 4.9 -0.2   bottom-radius top-radius height)
+         (screw-insert 4.9 3.2   bottom-radius top-radius height)
          ))
 (def screw-insert-height 3.8)
 (def screw-insert-bottom-radius (/ 5.31 2))
@@ -718,7 +719,6 @@
 ;; ; Wall Thickness W:\t1.65
 ;; (def screw-insert-outers (screw-insert-all-shapes (+ screw-insert-bottom-radius 1.65) (+ screw-insert-top-radius 1.65) (+ screw-insert-height 1.5) true))
 
-(def bottom-plate-height 3)
 ;; (def screw-radius 1.8)
 ;; (def screw-insert-screw-holes (screw-insert-all-shapes screw-radius screw-radius bottom-plate-height false))
 ;; (def screw-insert-screw-countersink
@@ -742,7 +742,7 @@
                                        ; usb-holder)
                                 ; rj9-space
                                 ; usb-holder-hole
-                                screw-insert-holes)
+                                (translate [0 0 -0.01] screw-insert-holes))
                     ; rj9-holder
                     ; wire-posts
                     ; thumbcaps
@@ -751,13 +751,13 @@
                    (translate [0 0 -20] (cube 350 350 40))
                   ))
 
-(spit "things/right.scad"
+(spit "things/right-cyril.scad"
       (write-scad model-right))
 
-(spit "things/left.scad"
+(spit "things/left-cyril.scad"
       (write-scad (mirror [-1 0 0] model-right)))
 
-(spit "things/right-test.scad"
+(spit "things/right-cyril-test.scad"
       (write-scad
                    (union
                     key-holes
@@ -805,16 +805,27 @@
                         thumb-fill))))
         screw-insert-screw-holes)))
 
-(spit "things/right-plate.scad"
+(spit "things/right-plate-cyril.scad"
       (write-scad
-         (difference plate-right (translate [0 0 10] (union case-walls
-                                   screw-insert-outers)))))
+         (difference plate-right (
+           translate [0 0 0] (
+            union model-right
+            screw-insert-outers
+            (translate [0 0 0] (scale [1.01 1.01 1] model-right))
+            (translate [0 0 -3] screw-insert-screw-holes)
+            (translate [0 0 -6.5] screw-insert-holes)
+)))))
 
-(spit "things/right-plate.scad"
-      (write-scad plate-right))
-
-(spit "things/left-plate.scad"
-      (write-scad (mirror [-1 0 0] plate-right)))
+(spit "things/left-plate-cyril.scad"
+      (write-scad (mirror [-1 0 0]
+         (difference plate-right (
+           translate [0 0 0] (
+            union model-right
+            screw-insert-outers
+            (translate [0 0 0] (scale [1.01 1.01 1] model-right))
+            (translate [0 0 -3] screw-insert-screw-holes)
+            (translate [0 0 -6.5] screw-insert-holes)
+))))))
 
 (spit "things/test.scad"
       (write-scad

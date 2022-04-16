@@ -1,10 +1,8 @@
 lein run src/dactyl_keyboard/dactyl.clj
-cp things/right.scad things/right-cyril.scad
-cp things/left.scad things/left-cyril.scad
-cp things/right-plate.scad things/right-cyril-plate.scad
-/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD -o things/right-cyril-plate.dxf things/right-cyril-plate.scad
 /Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD -o things/right-cyril.stl things/right-cyril.scad
 /Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD -o things/left-cyril.stl  things/left-cyril.scad
+/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD -o things/right-plate-cyril.stl things/right-plate-cyril.scad
+/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD -o things/left-plate-cyril.stl  things/left-plate-cyril.scad
 
 # patch -p1 < 4x6.patch 
 # lein run src/dactyl_keyboard/dactyl.clj
