@@ -12,7 +12,7 @@ Changes:
 * Added bottom plate
 
 
-* [Single Unit Topre PCB holder](cyrilboyer/dactyl-manuform-68/tree/master/things/test-single-plate.stl)
+* [Single Unit Topre Realforce PCB holder](/things/test-single-plate.stl)
 
 For reference see: [Dactyl-manuform](https://github.com/abstracthat/dactyl-manuform)
 
