@@ -4,6 +4,8 @@ This is a fork of the [Dactyl](https://github.com/adereth/dactyl-keyboard), a pa
 I wanted to have a Dactyl with Topre switches, I built a couple of working prototypes before that, one was in the form of a PCB with an arduino controller.
 I then created a small breakout board / controller based off the awesome nice!nano instead so that I could hopefully handwire a Dactyl.
 
+Had the case 3D printed, see below, but does not feel as comfortable as my Kinesis 360 so intending to modify again to get closer to it (see existing forks: Dactyl CC).
+
 ![Prototype](/resources/prototype-dactyl.png)
 
 Changes:
